@@ -1,0 +1,19 @@
+---
+# If the repository does not exist, it is created. If it does exist, would not
+# affect any policies already on it.
+
+- hosts: localhost
+  connection: local
+  gather_facts: False
+
+  tasks:
+    - name: ecr-repo
+      ecs_ecr: name=jenkins
+
+    - name: remove some ECR repositories
+      ecs_ecr: 
+        name: "{{ item }}"
+        state: absent
+      loop:
+        - super/cool
+...
