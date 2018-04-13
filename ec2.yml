@@ -1,7 +1,8 @@
 ---
-- hosts: localhost
+- name: Instances creation play
+  hosts: localhost
   connection: local
-  gather_facts: False
+  gather_facts: false
 
   tasks:
     - name: Provision a set of instances
@@ -13,11 +14,13 @@
         group: WebServerSG
         instance_type: t2.micro
         image: "{{ ami_id }}"
-        exact_count: 5
+        instance_profile_name: ecsInstanceRole
+        exact_count: 2
         count_tag:
-          Name: Demo
+          cluster: default
         instance_tags:
-          Name: Demo
+          cluster: default
+        # user_data: 'sudo sh -c "echo ECS_CLUSTER=cluster01 >> /etc/ecs/ecs.config"'
         wait: true
       register: ec2
 
@@ -25,21 +28,28 @@
       wait_for:
         host: "{{ item.public_dns_name }}"
         port: 22
-        delay: 20
+        delay: no
         timeout: 320
         state: started
-      with_items: "{{ ec2.instances }}"
+      loop: "{{ ec2.instances }}"
 
     - name: Add all instance public IPs to host group
       add_host: hostname={{ item.public_ip }} groups=ec2hosts
       loop: "{{ ec2.instances }}"
 
-- hosts: ec2hosts
-  name: configuration play
+- name: Instances configuration play
+  hosts: ec2hosts  
   user: ec2-user
+  become: true
   gather_facts: true
 
   tasks:
-     - name: Check NTP service
-       service: name=ntpd state=started
+    #  - name: Configure ECS cluster
+    #    become: true
+    #    shell: echo ECS_CLUSTER=cluster01 >> /etc/ecs/ecs.config
+    - name: Upgrade all packages
+      yum:
+        name: '*'
+        state: latest
+
 ...

@@ -1,5 +1,7 @@
 ---
 ec2_access_key: "--REMOVED--"
 ec2_secret_key: "--REMOVED--"
-ami_id: "ami-3bfab942"
+
+# ami_id: "ami-3bfab942"
+ami_id: "ami-bfb5fec6"
 ...

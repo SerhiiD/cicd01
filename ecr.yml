@@ -7,13 +7,17 @@
   gather_facts: False
 
   tasks:
-    - name: ecr-repo
-      ecs_ecr: name=jenkins
+    - name: Create some ECRs
+      ecs_ecr: 
+        name: "{{ item }}"
+        state: present
+      loop:
+        - jenkins
 
-    - name: remove some ECR repositories
+    - name: Remove some ECRs
       ecs_ecr: 
         name: "{{ item }}"
         state: absent
       loop:
-        - super/cool
+        - deleted/ecr
 ...
