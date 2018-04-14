@@ -2,7 +2,8 @@
 # If the repository does not exist, it is created. If it does exist, would not
 # affect any policies already on it.
 
-- hosts: localhost
+- name: ECR creation play
+  hosts: localhost
   connection: local
   gather_facts: False
 

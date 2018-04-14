@@ -1,5 +1,6 @@
 ---
-- hosts: localhost
+- name: ECS creation play
+  hosts: localhost
   connection: local
   gather_facts: False
 

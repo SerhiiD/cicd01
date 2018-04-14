@@ -15,7 +15,7 @@
         instance_type: t2.micro
         image: "{{ ami_id }}"
         instance_profile_name: ecsInstanceRole
-        exact_count: 2
+        exact_count: "{{ ecsInstanceCount }}"
         count_tag:
           cluster: default
         instance_tags:
@@ -34,11 +34,11 @@
       loop: "{{ ec2.instances }}"
 
     - name: Add all instance public IPs to host group
-      add_host: hostname={{ item.public_ip }} groups=ec2hosts
+      add_host: hostname={{ item.public_ip }} groups=ecsInstances
       loop: "{{ ec2.instances }}"
 
 - name: Instances configuration play
-  hosts: ec2hosts  
+  hosts: ecsInstances  
   user: ec2-user
   become: true
   gather_facts: true
