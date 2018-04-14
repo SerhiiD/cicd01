@@ -15,7 +15,7 @@
         instance_type: t2.micro
         image: "{{ ami_id }}"
         instance_profile_name: ecsInstanceRole
-        exact_count: "{{ ecsInstanceCount }}"
+        exact_count: "{{ ecsInstancesCount }}"
         count_tag:
           cluster: default
         instance_tags:
