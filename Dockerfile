@@ -1,9 +1,10 @@
+#Test Dockerfile. To be changed
 FROM jenkins:latest
 LABEL maintainer="SerhiiD"
 
-USER root
+# USER root
 #Install OS updates
-RUN apt-get update && apt-get upgrade -y
+# RUN apt-get update && apt-get upgrade -y
 
 #Copy site to WEB-server
 # COPY src/main/html /usr/share/nginx/html/fileshare
