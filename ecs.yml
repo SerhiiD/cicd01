@@ -29,15 +29,30 @@
     - name: Create task definition
       ecs_taskdefinition:
         containers:
-        - name: jenkinsTask
+        - name: jenkinsContainer
           essential: true
-          image: "483149632405.dkr.ecr.eu-west-1.amazonaws.com/fileshare:release-v1.0-71"
+          image: "{{ jenkinsDockerImage }}"
           memory: 256
           portMappings:
           - containerPort: 80
             hostPort: 80
-
         family: jenkinsFamily
         state: present
       register: task_output
+
+    # - name: Task output
+    #   debug: var=task_output.taskdefinition.containerDefinitions
+
+    - name: Run task
+      ecs_task:
+        operation: run
+        cluster: default
+        task_definition: jenkinsFamily
+        count: 1
+        started_by: ansible
+      register: task_output
+
+    - name: Task output
+      debug: var=task_output
+      
 ...
