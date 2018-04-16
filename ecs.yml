@@ -52,7 +52,7 @@
         started_by: ansible
       register: task_output
 
-    - name: Task output
-      debug: var=task_output
+    # - name: Task output
+    #   debug: var=task_output
       
 ...
