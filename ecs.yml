@@ -31,13 +31,15 @@
         containers:
         - name: jenkinsContainer
           essential: true
-          image: "{{ jenkinsDockerImage }}"
+          # image: "{{ jenkinsDockerImage }}"
+          image: "{{ item.invocation.module_args.name }}:{{ item.invocation.module_args.tag }}"
           memory: 256
           portMappings:
           - containerPort: 8080
             hostPort: 8080
         family: jenkinsFamily
         state: present
+      with_items: "{{ docker_image.results }}"
       register: task_output
 
     # - name: Task output
