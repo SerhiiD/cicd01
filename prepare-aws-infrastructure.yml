@@ -1,6 +1,7 @@
 ---
 - import_playbook: ec2.yml
 - import_playbook: ecr.yml
+- import_playbook: docker.yml
 - import_playbook: ecs.yml
 
 ...

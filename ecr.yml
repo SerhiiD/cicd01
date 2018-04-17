@@ -14,6 +14,7 @@
         state: present
       loop:
         - jenkins
+      register: ecr
 
     - name: Remove some ECRs
       ecs_ecr: 
@@ -21,4 +22,9 @@
         state: absent
       loop:
         - deleted/ecr
+
+    - name: ecr
+      debug: 
+        msg: "{{ item.repository.repositoryUri }}"
+      with_items: "{{ ecr.results }}"
 ...
