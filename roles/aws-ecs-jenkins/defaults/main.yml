@@ -1,0 +1,13 @@
+---
+# defaults file for aws-ecs-jenkins
+
+ami_id: "ami-bfb5fec6"
+ecsInstancesCount: 1
+ec2_instance_instance_type: "t2.micro"
+aws_region: "eu-west-1"
+ecr_name: "jenkins"
+docker_image_tag: "latest"
+ecs_cluster_name: "default"
+ecs_taskdefinition_name: "jenkinsFamily"
+jenkins_container_name: "jenkinsContainer"
+jenkins_container_memory: 256

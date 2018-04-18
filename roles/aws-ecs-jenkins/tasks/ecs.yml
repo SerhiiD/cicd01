@@ -1,0 +1,39 @@
+---
+# Cluster creation
+- ecs_cluster:
+    name: "{{ ecs_cluster_name }}"
+    state: present
+
+# - name: Wait for register
+#   ecs_cluster:
+#     name: "{{ new_cluster }}"
+#     state: has_instances
+#     delay: 10
+#     repeat: 10
+#   register: task_output
+
+- name: Create task definition
+  ecs_taskdefinition:
+    containers:
+    - name: "{{ jenkins_container_name }}"
+      essential: true
+      image: "{{ item.invocation.module_args.name }}:{{ item.invocation.module_args.tag }}"
+      memory: "{{ jenkins_container_memory }}"
+      portMappings:
+      - containerPort: 8080
+        hostPort: 8080
+      - containerPort: 50000
+        hostPort: 50000
+    family: "{{ ecs_taskdefinition_name }}"
+    region: "{{ aws_region }}"
+    state: present
+  with_items: "{{ docker_image.results }}"
+
+- name: Run task
+  ecs_task:
+    operation: run
+    cluster: "{{ ecs_cluster_name }}"
+    task_definition: "{{ ecs_taskdefinition_name }}"
+    region: "{{ aws_region }}"
+    count: 1
+    started_by: ansible

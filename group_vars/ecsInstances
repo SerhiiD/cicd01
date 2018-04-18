@@ -1,6 +1,3 @@
 ---
 ansible_ssh_private_key_file: ~/.ssh/KeyPair01.pem
 ansible_ssh_extra_args: "-o StrictHostKeyChecking=no"
-
-
-...

@@ -1,0 +1,19 @@
+---
+- name: Build a Docker image and push it to a private repo
+  docker_image:
+    name: "{{ item.repository.repositoryUri }}"
+    path: "{{ role_path }}/files/"
+    tag: "{{ docker_image_tag }}"
+    state: present
+    push: yes
+  with_items: "{{ ecr.results }}"
+  register: docker_image
+
+- name: docker_image
+  debug:
+    msg: "{{ item.invocation.module_args.name }}:{{ item.invocation.module_args.tag }}"
+  with_items: "{{ docker_image.results }}"
+
+# - name: role_path
+#   debug:
+#     msg: "{{ role_path }}"
