@@ -1,0 +1,7 @@
+---
+# tasks file for aws-ecs-jenkins
+
+- include: ec2.yml
+- include: ecr.yml
+- include: docker.yml
+- include: ecs.yml
