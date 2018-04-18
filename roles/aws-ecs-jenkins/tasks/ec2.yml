@@ -9,6 +9,7 @@
     instance_type: "{{ ec2_instance_instance_type }}"
     image: "{{ ami_id }}"
     instance_profile_name: ecsInstanceRole
+    assign_public_ip: yes
     exact_count: "{{ ecsInstancesCount }}"
     count_tag:
       cluster: "{{ ecs_cluster_name }}"
