@@ -16,12 +16,12 @@
         - jenkins
       register: ecr
 
-    - name: Remove some ECRs
-      ecs_ecr: 
-        name: "{{ item }}"
-        state: absent
-      loop:
-        - deleted/ecr
+    # - name: Remove some ECRs
+    #   ecs_ecr: 
+    #     name: "{{ item }}"
+    #     state: absent
+    #   loop:
+    #     - deleted/ecr
 
     - name: ecr
       debug: 
