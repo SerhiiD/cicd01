@@ -1,6 +1,9 @@
 ---
 # Cluster creation
 - ecs_cluster:
+    aws_access_key: "{{ aws_access_key }}"
+    aws_secret_key: "{{ aws_secret_key }}"
+    region: "{{ aws_region }}"
     name: "{{ ecs_cluster_name }}"
     state: present
 
@@ -14,6 +17,9 @@
 
 - name: Create task definition
   ecs_taskdefinition:
+    aws_access_key: "{{ aws_access_key }}"
+    aws_secret_key: "{{ aws_secret_key }}"
+    region: "{{ aws_region }}"
     containers:
     - name: "{{ jenkins_container_name }}"
       essential: true
@@ -31,6 +37,9 @@
 
 - name: Run task
   ecs_task:
+    aws_access_key: "{{ aws_access_key }}"
+    aws_secret_key: "{{ aws_secret_key }}"
+    region: "{{ aws_region }}"
     operation: run
     cluster: "{{ ecs_cluster_name }}"
     task_definition: "{{ ecs_taskdefinition_name }}"
